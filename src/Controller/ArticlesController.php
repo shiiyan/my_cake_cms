@@ -39,6 +39,10 @@ class ArticlesController extends AppController
             }
             $this->Flash->error(__('Unable to add your article'));
         }
+
+        $tags = $this->Articles->Tags->find('list')->all();
+
+        $this->set('tags', $tags);
         $this->set('article', $article);
     }
 
@@ -54,6 +58,10 @@ class ArticlesController extends AppController
             }
             $this->Flash->error(__('Unable to update your article'));
         }
+
+        $tags = $this->Articles->Tags->find('list')->all();
+
+        $this->set('tags', $tags);
         $this->set('article', $article);
     }
 
@@ -66,5 +74,19 @@ class ArticlesController extends AppController
             $this->Flash->success(__('The {0} article has been deleted.', $article->title));
             return $this->redirect(['action' => 'index']);
         }
+    }
+
+    public function tags()
+    {
+        $tags = $this->request->getParam('pass');
+
+        $articles = $this->Articles->find('tagged', [
+            'tags' => $tags
+        ]);
+
+        $this->set([
+            'articles' => $articles,
+            'tags' => $tags
+        ]);
     }
 }
