@@ -17,6 +17,7 @@ class UsersController extends AppController
     {
         parent::beforeFilter($event);
         $this->Authentication->addUnauthenticatedActions(['login', 'add']);
+        $this->Authorization->skipAuthorization();
     }
 
     /**
@@ -25,9 +26,9 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
-    {
+    {   
         $users = $this->paginate($this->Users);
-
+        
         $this->set(compact('users'));
     }
 

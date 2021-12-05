@@ -17,7 +17,7 @@ class ArticlesController extends AppController
     public function index()
     {
         $this->Authorization->skipAuthorization();
-        $articles = $this->Paginator->paginate($this->Articles->find());
+        $articles = $this->Paginator->paginate($this->Articles->find()->contain('Users'));
         $this->set(compact('articles'));
     }
 
@@ -26,7 +26,7 @@ class ArticlesController extends AppController
         $this->Authorization->skipAuthorization();
         $article = $this->Articles
             ->findBySlug($slug)
-            ->contain('Tags')
+            ->contain(['Tags', 'Users'])
             ->firstOrFail();
         $this->set(compact('article'));
     }
