@@ -46,7 +46,8 @@ use Psr\Http\Message\ServerRequestInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication implements AuthenticationServiceProviderInterface,
+class Application extends BaseApplication implements
+    AuthenticationServiceProviderInterface,
     AuthorizationServiceProviderInterface
 {
     /**
@@ -78,6 +79,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
         // Load more plugins here
         $this->addPlugin('Authorization');
+        $this->addPlugin('Migrations');
     }
 
     /**

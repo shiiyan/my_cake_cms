@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "856581eb4919d7524807983f3984d2a8",
+    "content-hash": "9cee3816c9cf6d1357a9238c77f4f223",
     "packages": [
         {
             "name": "cakephp/authentication",
@@ -305,16 +305,16 @@
         },
         {
             "name": "cakephp/migrations",
-            "version": "3.3.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "e0ee5fb22f21ee18f85d2fc554a22c3a5d119dea"
+                "reference": "42704263a216dbe33fe41ddbe0780769b1c864be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/e0ee5fb22f21ee18f85d2fc554a22c3a5d119dea",
-                "reference": "e0ee5fb22f21ee18f85d2fc554a22c3a5d119dea",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/42704263a216dbe33fe41ddbe0780769b1c864be",
+                "reference": "42704263a216dbe33fe41ddbe0780769b1c864be",
                 "shasum": ""
             },
             "require": {
@@ -361,7 +361,7 @@
                 "issues": "https://github.com/cakephp/migrations/issues",
                 "source": "https://github.com/cakephp/migrations"
             },
-            "time": "2021-10-30T03:48:47+00:00"
+            "time": "2021-11-29T16:23:04+00:00"
         },
         {
             "name": "cakephp/plugin-installer",
@@ -6024,7 +6024,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "cakephp/migrations": 0
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
