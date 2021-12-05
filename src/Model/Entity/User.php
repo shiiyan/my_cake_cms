@@ -12,6 +12,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $email
  * @property string $password
+ * @property string {'user', 'administrator'} $group
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
@@ -31,6 +32,7 @@ class User extends Entity
     protected $_accessible = [
         'email' => true,
         'password' => true,
+        'group' => true,
         'created' => true,
         'modified' => true,
         'articles' => true,
@@ -52,5 +54,10 @@ class User extends Entity
         }
 
         return null;
+    }
+
+    protected function _getIsAdmin(): bool
+    {
+        return $this->group === 'administrator';
     }
 }

@@ -75,6 +75,11 @@ class UsersTable extends Table
             ->requirePresence('password', 'create')
             ->notEmptyString('password');
 
+        $validator
+            ->scalar('group')
+            ->inList('group', ['user', 'administrator'])
+            ->notEmptyString('group');
+
         return $validator;
     }
 

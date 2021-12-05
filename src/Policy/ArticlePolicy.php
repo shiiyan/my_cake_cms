@@ -32,7 +32,7 @@ class ArticlePolicy
      */
     public function canEdit(IdentityInterface $user, Article $article)
     {
-        return $this->isAuthor($user, $article);
+        return $user->getOriginalData()->isAdmin || $this->isAuthor($user, $article);
     }
 
     /**
@@ -44,10 +44,11 @@ class ArticlePolicy
      */
     public function canDelete(IdentityInterface $user, Article $article)
     {
-        return $this->isAuthor($user, $article);
+        return $user->getOriginalData()->isAdmin || $this->isAuthor($user, $article);
     }
 
-    protected function isAuthor(IdentityInterface $user, Article $article) {
+    protected function isAuthor(IdentityInterface $user, Article $article): bool
+    {
         return $article->user_id === $user->getIdentifier();
     }
 }
