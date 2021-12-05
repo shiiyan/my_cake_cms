@@ -10,3 +10,5 @@ cs_check:
 	cd .. && php composer.phar run cs-check --working-dir ./cms
 cs_fix:
 	cd .. && php composer.phar run cs-fix --working-dir ./cms
+stan:
+	cd .. && php composer.phar run stan --working-dir ./cms
