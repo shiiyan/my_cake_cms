@@ -14,7 +14,7 @@
  * @var \App\View\AppView $this
  */
 
-$cakeDescription = 'CakePHP: the rapid development php framework';
+$mySimpleCmsDescription = 'My Simple CMS: for learning and fun';
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +22,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?= $cakeDescription ?>:
+        <?= $mySimpleCmsDescription ?>:
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
@@ -38,12 +38,24 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <body>
     <nav class="top-nav">
         <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
+            <a href="<?= $this->Url->build('/') ?>"><span>My Simple</span> CMS</a>
         </div>
         <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a>
+            <a href="<?= $this->Url->build('/articles') ?>">Articles</a>
+            <a href="<?= $this->Url->build('/tags') ?>">Tags</a>
+            <a href="<?= $this->Url->build('/users') ?>">Users</a>
         </div>
+        <?php if ($this->Identity->isLoggedIn()) : ?>
+            <div class="top-nav-identity">
+                <a href="<?= $this->Url->build('/users/view/'.$this->Identity->get('id')) ?>">
+                    <?= $this->Identity->get('email') ?> as <span class="top-nav-identity"><?= $this->Identity->get('group') ?></span>
+                </a>
+            </div>
+        <?php else : ?>
+            <div class="top-nav-no-identity">
+                <a href="<?= $this->Url->build('/users/login') ?>">Login</a>
+            </div>
+        <?php endif; ?>
     </nav>
     <main class="main">
         <div class="container">
