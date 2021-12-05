@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
 use Cake\Collection\Collection;
+use Cake\ORM\Entity;
 
 class Article extends Entity
 {
@@ -11,7 +12,7 @@ class Article extends Entity
         '*' => true,
         'id' => false,
         'slug' => false,
-        'tag_string' => true
+        'tag_string' => true,
     ];
 
     protected function _getTagString()

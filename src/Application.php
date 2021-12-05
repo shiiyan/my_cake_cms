@@ -167,7 +167,7 @@ class Application extends BaseApplication implements
             'fields' => [
                 'username' => 'email',
                 'password' => 'password',
-            ]
+            ],
         ]);
 
         $authenticationService->loadAuthenticator('Authentication.Session');

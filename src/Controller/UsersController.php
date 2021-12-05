@@ -26,9 +26,9 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
-    {   
+    {
         $users = $this->paginate($this->Users);
-        
+
         $this->set(compact('users'));
     }
 
@@ -141,6 +141,7 @@ class UsersController extends AppController
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
             $this->Authentication->logout();
+
             return $this->redirect(['controller' => 'Users', 'action' => 'login']);
         }
     }

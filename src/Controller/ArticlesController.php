@@ -1,8 +1,7 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
-
-use App\Controller\AppController;
 
 class ArticlesController extends AppController
 {
@@ -41,6 +40,7 @@ class ArticlesController extends AppController
 
             if ($this->Articles->save($article)) {
                 $this->Flash->success(__('Your article has been saved.'));
+
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Unable to add your article'));
@@ -60,10 +60,11 @@ class ArticlesController extends AppController
 
         if ($this->request->is(['post', 'put'])) {
             $this->Articles->patchEntity($article, $this->request->getData(), [
-                'accessibleFields' => ['user_id' => false]
+                'accessibleFields' => ['user_id' => false],
             ]);
             if ($this->Articles->save($article)) {
                 $this->Flash->success(__('Your article has been edited.'));
+
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('Unable to update your article'));
@@ -80,6 +81,7 @@ class ArticlesController extends AppController
         $this->Authorization->authorize($article);
         if ($this->Articles->delete($article)) {
             $this->Flash->success(__('The {0} article has been deleted.', $article->title));
+
             return $this->redirect(['action' => 'index']);
         }
     }
@@ -90,12 +92,12 @@ class ArticlesController extends AppController
         $tags = $this->request->getParam('pass');
 
         $articles = $this->Articles->find('tagged', [
-            'tags' => $tags
+            'tags' => $tags,
         ]);
 
         $this->set([
             'articles' => $articles,
-            'tags' => $tags
+            'tags' => $tags,
         ]);
     }
 }

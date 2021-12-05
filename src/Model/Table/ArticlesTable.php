@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Event\EventInterface;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Utility\Text;
-use Cake\Event\EventInterface;
 use Cake\Validation\Validator;
 
 class ArticlesTable extends Table
@@ -19,7 +20,7 @@ class ArticlesTable extends Table
         ]);
         $this->belongsToMany('Tags', [
             'joinTable' => 'articles_tags',
-            'dependent' => true
+            'dependent' => true,
         ]);
     }
 
