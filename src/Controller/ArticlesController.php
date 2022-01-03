@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Decorator\ArticleDecorator;
+
 class ArticlesController extends AppController
 {
     public function initialize(): void
@@ -16,7 +18,14 @@ class ArticlesController extends AppController
 
     public function index()
     {
-        $articles = $this->Paginator->paginate($this->Articles->find()->contain('Users'));
+        $articles = $this->Paginator->paginate(
+            $this->Articles->find()->contain('Users')
+        );
+
+        $articles = array_map(function ($article) {
+            return new ArticleDecorator($article);
+        }, $articles->toList());
+
         $this->set(compact('articles'));
     }
 

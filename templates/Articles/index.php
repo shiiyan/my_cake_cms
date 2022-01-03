@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Article[]|\Cake\Collection\CollectionInterface $articles
@@ -19,17 +20,17 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($articles as $article): ?>
+                <?php foreach ($articles as $article) : ?>
                     <tr>
                         <td><?= $this->Html->link($article->title, ['action' => 'view', $article->slug]) ?></td>
-                        <td><?= $this->Html->link($article->user->email, ['controller' => 'users', 'action' => 'view', $article->user_id]) ?></td>
+                        <td><?= $this->Html->link($article->authorName, ['controller' => 'users', 'action' => 'view', $article->origin->user_id]) ?></td>
                         <td><?= $article->created->format(DATE_RFC850) ?></td>
                         <td><?= $article->modified->format(DATE_RFC850) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $article->slug]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $article->slug], ['confirm' => __('Are you sure you want to delete {0}?', $article->slug)]) ?>
-                    </td>
-                </tr>
+                        <td class="actions">
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $article->slug]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $article->slug], ['confirm' => __('Are you sure you want to delete {0}?', $article->origin->slug)]) ?>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
