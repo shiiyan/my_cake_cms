@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -8,6 +9,7 @@ use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Utility\Text;
 use Cake\Validation\Validator;
+use Cake\Collection\Collection;
 
 class ArticlesTable extends Table
 {
@@ -43,7 +45,8 @@ class ArticlesTable extends Table
             ->minLength('title', 10)
             ->maxLength('title', 255)
             ->notEmptyString('body')
-            ->minLength('body', 10);
+            ->minLength('body', 10)
+            ->notEmptyString('slug');
 
         return $validator;
     }
@@ -72,29 +75,25 @@ class ArticlesTable extends Table
 
     protected function _buildTags($tagString): array
     {
-        $newTags = array_map('trim', explode(',', $tagString));
-        $newTags = array_filter($newTags);
-        $newTags = array_unique($newTags);
+        $inputTags = array_map('trim', explode(',', $tagString));
+        $inputTags = array_filter($inputTags);
+        $inputTags = array_unique($inputTags);
 
-        $out = [];
-        $tags = $this->Tags->find()
-            ->where(['Tags.title IN' => $newTags])
+        $foundTags = $this->Tags->find()
+            ->where(['Tags.title IN' => $inputTags])
             ->all();
 
-        foreach ($tags->extract('title') as $existing) {
-            $index = array_search($existing, $newTags);
-            if ($index !== false) {
-                unset($newTags[$index]);
+        $newTags =  (new Collection($inputTags))->filter(
+            function ($tag) use ($foundTags) {
+                return !$foundTags->extract('title')->contains($tag);
             }
-        }
+        );
 
-        foreach ($tags as $tag) {
-            $out[] = $tag;
-        }
-
-        foreach ($newTags as $tag) {
-            $out[] = $this->Tags->newEntity(['title' => $tag]);
-        }
+        $out = $foundTags->append(
+            $newTags->map(function ($tag) {
+                return $this->Tags->newEntity(['title' => $tag]);
+            })
+        )->toList();
 
         return $out;
     }

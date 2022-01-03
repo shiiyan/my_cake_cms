@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -26,7 +27,7 @@ class ArticlesController extends AppController
             ->contain(['Tags', 'Users'])
             ->firstOrFail();
         $this->Authorization->authorize($article);
-        
+
         $this->set(compact('article'));
     }
 
@@ -90,7 +91,7 @@ class ArticlesController extends AppController
     }
 
     public function tags()
-    {   
+    {
         $this->Authorization->authorize('search');
 
         $tags = $this->request->getParam('pass');

@@ -47,8 +47,6 @@
                             <th><?= __('Id') ?></th>
                             <th><?= __('User Id') ?></th>
                             <th><?= __('Title') ?></th>
-                            <th><?= __('Slug') ?></th>
-                            <th><?= __('Body') ?></th>
                             <th><?= __('Published') ?></th>
                             <th><?= __('Created') ?></th>
                             <th><?= __('Modified') ?></th>
@@ -59,8 +57,6 @@
                             <td><?= h($articles->id) ?></td>
                             <td><?= h($articles->user_id) ?></td>
                             <td><?= h($articles->title) ?></td>
-                            <td><?= h($articles->slug) ?></td>
-                            <td><?= h($articles->body) ?></td>
                             <td><?= h($articles->published) ?></td>
                             <td><?= h($articles->created) ?></td>
                             <td><?= h($articles->modified) ?></td>

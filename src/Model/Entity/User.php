@@ -54,10 +54,6 @@ class User extends Entity
         return null;
     }
 
-    protected function _getPassword(): string {
-        return 'dummy';
-    }
-
     protected function _getIsAdmin(): bool
     {
         return $this->group === 'administrator';
