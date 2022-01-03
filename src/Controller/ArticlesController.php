@@ -15,18 +15,18 @@ class ArticlesController extends AppController
 
     public function index()
     {
-        $this->Authorization->skipAuthorization();
         $articles = $this->Paginator->paginate($this->Articles->find()->contain('Users'));
         $this->set(compact('articles'));
     }
 
     public function view($slug = null)
     {
-        $this->Authorization->skipAuthorization();
         $article = $this->Articles
             ->findBySlug($slug)
             ->contain(['Tags', 'Users'])
             ->firstOrFail();
+        $this->Authorization->authorize($article);
+        
         $this->set(compact('article'));
     }
 
@@ -34,6 +34,7 @@ class ArticlesController extends AppController
     {
         $article = $this->Articles->newEmptyEntity();
         $this->Authorization->authorize($article);
+
         if ($this->request->is('post')) {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
             $article->user_id = $this->request->getAttribute('identity')->getIdentifier();
@@ -56,6 +57,7 @@ class ArticlesController extends AppController
             ->findBySlug($slug)
             ->contain('Tags')
             ->firstOrFail();
+
         $this->Authorization->authorize($article);
 
         if ($this->request->is(['post', 'put'])) {
@@ -79,6 +81,7 @@ class ArticlesController extends AppController
 
         $article = $this->Articles->findBySlug($slug)->firstOrFail();
         $this->Authorization->authorize($article);
+
         if ($this->Articles->delete($article)) {
             $this->Flash->success(__('The {0} article has been deleted.', $article->title));
 
@@ -87,8 +90,9 @@ class ArticlesController extends AppController
     }
 
     public function tags()
-    {
-        $this->Authorization->skipAuthorization();
+    {   
+        $this->Authorization->authorize('search');
+
         $tags = $this->request->getParam('pass');
 
         $articles = $this->Articles->find('tagged', [

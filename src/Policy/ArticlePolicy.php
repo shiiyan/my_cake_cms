@@ -12,43 +12,67 @@ use Authorization\IdentityInterface;
 class ArticlePolicy
 {
     /**
-     * Check if $user can add Article
+     * Check if $identity can add Article
      *
-     * @param \Authorization\IdentityInterface $user The user.
+     * @param \Authorization\IdentityInterface $identity The user.
      * @param \App\Model\Entity\Article $article
      * @return bool
      */
-    public function canAdd(IdentityInterface $user, Article $article)
+    public function canView(IdentityInterface $identity, Article $article)
     {
         return true;
     }
 
     /**
-     * Check if $user can edit Article
+     * Check if $identity can add Article
      *
-     * @param \Authorization\IdentityInterface $user The user.
+     * @param \Authorization\IdentityInterface $identity The user.
      * @param \App\Model\Entity\Article $article
      * @return bool
      */
-    public function canEdit(IdentityInterface $user, Article $article)
+    public function canAdd(IdentityInterface $identity, Article $article)
     {
-        return $user->getOriginalData()->isAdmin || $this->isAuthor($user, $article);
+        return true;
     }
 
     /**
-     * Check if $user can delete Article
+     * Check if $identity can edit Article
      *
-     * @param \Authorization\IdentityInterface $user The user.
+     * @param \Authorization\IdentityInterface $identity The user.
      * @param \App\Model\Entity\Article $article
      * @return bool
      */
-    public function canDelete(IdentityInterface $user, Article $article)
+    public function canEdit(IdentityInterface $identity, Article $article)
     {
-        return $user->getOriginalData()->isAdmin || $this->isAuthor($user, $article);
+        return $identity->getOriginalData()->isAdmin || $this->isAuthor($identity, $article);
     }
 
-    protected function isAuthor(IdentityInterface $user, Article $article): bool
+    /**
+     * Check if $identity can delete Article
+     *
+     * @param \Authorization\IdentityInterface $identity The user.
+     * @param \App\Model\Entity\Article $article
+     * @return bool
+     */
+    public function canDelete(IdentityInterface $identity, Article $article)
     {
-        return $article->user_id === $user->getIdentifier();
+        return $identity->getOriginalData()->isAdmin || $this->isAuthor($identity, $article);
+    }
+
+    /**
+     * Check if $identity can search Article
+     *
+     * @param \Authorization\IdentityInterface $identity The user.
+     * @param \App\Model\Entity\Article $article
+     * @return bool
+     */
+    public function canSearch(IdentityInterface $identity)
+    {
+        return true;
+    }
+
+    protected function isAuthor(IdentityInterface $identity, Article $article): bool
+    {
+        return $article->user_id === $identity->getIdentifier();
     }
 }
